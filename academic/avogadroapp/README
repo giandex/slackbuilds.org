@@ -1,36 +1,22 @@
-Avogadro Libraries is a subproject of Avogadro 2 as implementation of 
-Avogadro 1.x mantained by OpenChemistry. It provides 3D rendering, 
-visualization, analysis and data processing useful in computational 
-chemistry, molecular modeling, bioinformatics, materials science, and 
-related areas.
-Avogadro Libraries is a dependency required by the graphic interface 
-user Avogadro Application (avogadroapp).
+Avogadro Application is the graphic user interface of Avogadro 2.
 
-This slackbuild requires as needed some dependencies (autodetected) 
-that improve Avogadro Libraries. You can enable or disable them by 
-passing variables to the script 
-(e.g. VAR=yes|no ./avogadrolibs.SlackBuild):
+Avogadro is an advanced molecular editor designed for cross-platform 
+use in computational chemistry, molecular modeling, bioinformatics, 
+materials science, and related areas. It offers flexible rendering and 
+a powerful plugin architecture. 
 
-LIBMSYM=yes|no (default: yes, libmsym required)
-SPGLIB=yes|no  (default: yes, spglib required)
-MMTF=yes|no    (default: yes, mmtf-cpp required)
-HDF5=yes|no    (default: no, hdf5 required)
-VTK=yes|no     (default: no, VTK required)
+Managed by OpenChemistry, Avogadro 2 it is based on QT5 libraries and 
+it is a rewrite of the old Avogadro 1.x.
 
-The extension Avogadro Generators (disabled by default) installs 
-Python input generators that can be run by the Avogadro 2 application 
-(avogadroapp) to generate input for various codes (Dalton, Q-Chem, 
-Orca, NWChem, ecc.): these scripts will be installed in a location 
-where the Avogadro 2 application can find them if the Plugin 
-Downloader is executed from the graphic interface user. 
-To enable the extension the dependency pybind11 is required and you 
-have to pass the variable PYTHON=yes to the slackbuild script:
+By default the script builds avogadroapp with shared libraries. If you
+want to enable the building with static libraries, pass the variable
+SHARED=no to the script:
 
-PYTHON=yes ./avogadrolibs.SlackBuild
+   SHARED=no ./avogadroapp.SlackBuild  (hdf5 required)   
 
-WARNING: the build enabling the support of VTK libraries works only 
-with VTK < 9.0 or VTK >= 9.2.6. The build against VTK 9.0.x fails. 
-Other versions of VTK 9.x earlier than 9.2.6 are not tested. 
+Warning: the computational settings made through the Input Generator
+require the MoleQueue server running to submit jobs to local
+applications or remote HPC clusters.
 
 Since Avogadro 2 version 1.98.0, the build requires cmake at version
 3.24 or greater. This version is the latest compatible with Slackware
