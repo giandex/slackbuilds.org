@@ -96,6 +96,11 @@ fi
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
+# Symlink to shared library might be useful
+cd $PKG/usr/lib${LIBDIRSUFFIX}
+ln -s libsvm.so.3 libsvm.so
+cd $TMP/$PRGNAM-$SRCVER 
+
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
