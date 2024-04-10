@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scafacos
 VERSION=${VERSION:-1.0.4}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -75,8 +75,8 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
-  
-CFLAGS="$SLKCFLAGS" \
+
+CFLAGS="$SLKCFLAGS -fcommon " \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
   --prefix=/usr \
@@ -84,7 +84,13 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc \
   --localstatedir=/var \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --build=$ARCH-slackware-linux
+  --build=$ARCH-slackware-linux \
+  --disable-library-install \
+  --with-internal-fftw=no \
+  --with-internal-pfft=no \
+  --with-internal-pnfft=yes \
+  --enable-shared \
+  --disable-static
 make
 make doc
 make install DESTDIR=$PKG
