@@ -89,8 +89,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --with-internal-fftw=no \
   --with-internal-pfft=no \
   --with-internal-pnfft=yes \
-  --enable-shared \
-  --disable-static
+  --enable-shared
 make
 make doc
 make install DESTDIR=$PKG
