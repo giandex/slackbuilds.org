@@ -25,8 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=MaterialX
-VERSION=${VERSION:-1.38.8}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-1.38.10}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 EXTVERSION=20240101
@@ -179,7 +179,7 @@ cd build
     $BUILDOPTIONS \
     $CMAKE_POLICY \
     -DCMAKE_BUILD_TYPE=Release ..
-  make -j 10
+  make
   make install/strip DESTDIR=$PKG
 cd ..
 
