@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=saga-gis
-VERSION=${VERSION:-9.4.0}
+VERSION=${VERSION:-9.5.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -65,19 +65,29 @@ set -e
 
 # unixODBC is needed in 32 bit systems instead of libiodbc released
 # with Slackware 15.0. The slackbuild stops if unixODBC is not installed
-if [ -f /usr/lib/libiodbc.so ] ; then
-  echo ""
-  echo ""
-  echo ""
-  echo "******************** WARNING *********************"
-  echo " This script cannot be executed in 32 bit systems "
-  echo " with iODBC as default ODBC library installed.    "
-  echo " The current process will be stopped.             "
-  echo " Please uninstall libiodbc package and then       "
-  echo " unixODBC from the slackbuild available in the SBo"
-  echo " repository.                                      "
-  echo "**************************************************"
-  exit 1;
+if [[ "$ARCH" = "i586" || "$ARCH" = "i686" ]] ; then
+  if ! [ -f /usr/lib/libodbc.so ] ; then
+    echo "";
+    echo "";
+    echo "";
+    echo "******************** WARNING *********************";
+    echo " This script cannot be executed in 32 bit systems ";
+    echo " with iODBC as default ODBC library installed.    ";
+    echo " The current process will be stopped.             ";
+    echo " Please install the unixODBC package from the     ";
+    echo " slackbuild available in the SBo repository.      ";
+    echo "**************************************************";
+    exit 1;
+  fi
+fi
+
+# if both unixODBCand and libiodbc are installed, SAGA set the
+# first as default driver ODBC. This flag should prevent possible 
+# compilation failures since cmake does not find the correct
+# path of unixODBC headers
+ODBC=""
+if pkg-config --exists odbc; then
+  ODBC="-DODBC_INCLUDE_DIR=/usr/include/unixodbc "
 fi
 
 # Look if the system has PDAL installed
@@ -115,6 +125,7 @@ cd build
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_MANDIR=/usr/man \
+    $ODBC \
     $WITHPDAL \
     $CMAKE_POLICY \
     -DCMAKE_BUILD_TYPE=Release ..
