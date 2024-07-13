@@ -7,6 +7,6 @@ MD5SUM="858030289538f374f4a9be94cb2b766e \
         75f0d39e52fefb886b39ea664ef76c80"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="proj wxGTK3"
+REQUIRES="gdal proj wxGTK3"
 MAINTAINER="Giancarlo Dessi"
 EMAIL="slack@giand.it"
