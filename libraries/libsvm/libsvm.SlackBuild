@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libsvm
-VERSION=${VERSION:-3.32}
+VERSION=${VERSION:-3.34}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -98,7 +98,7 @@ rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 # Symlink to shared library might be useful
 cd $PKG/usr/lib${LIBDIRSUFFIX}
-ln -s libsvm.so.3 libsvm.so
+ln -s libsvm.so.4 libsvm.so
 cd $TMP/$PRGNAM-$SRCVER 
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
