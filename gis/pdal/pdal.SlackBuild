@@ -125,7 +125,7 @@ cd build
     $BUILDHDF \
     $BUILDMATLAB \
     ..
-  make -j 10
+  make
   make install DESTDIR=$PKG
 cd ..
 
