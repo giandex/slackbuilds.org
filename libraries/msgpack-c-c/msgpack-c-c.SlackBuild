@@ -35,6 +35,7 @@ VERSION=${VERSION:-6.1.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+SRCNAM=msgpack-c
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -72,12 +73,12 @@ fi
 
 set -e
 
-# msgpack-c and older versions use the same include dirs so them
-# cannot coexist with msgpack-c-cpp
+# msgpack-c-c and older versions use the same include dirs so them
+# cannot coexist with msgpack-c-c
 if pkg-config --exists msgpack; then
  echo "************************************************************************"
  echo " WARNING: an old version of msgpack-c has been detected in your system!"
- echo " This conflicts with msgpack-c-cpp. Please remove old installations of"
+ echo " This conflicts with msgpack-c-c. Please remove old installations of"
  echo " msgpack-c before installing this package"
  echo " This script will be stopped"
  echo "************************************************************************"
@@ -95,9 +96,9 @@ fi
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM-$VERSION
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
+cd $SRCNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
