@@ -27,8 +27,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=postgis
-VERSION=${VERSION:-3.4.2}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-3.4.3}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -96,7 +96,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --datarootdir=/usr \
   --sysconfdir=/etc \
   --localstatedir=/var \
-  --without-protobuf \
   $SHP2PGSQL_GUI \
   --build=$ARCH-slackware-linux
 
@@ -113,7 +112,7 @@ fi
 mkdir -p $PKG/usr/bin
 cd $PKG/$pgbindir
   for f in *; do
-    base=`basename $f`
+    base=$( basename $f )
     echo ln -s $pgbindir/$base $PKG/usr/bin
     ln -s $pgbindir/$base $PKG/usr/bin
   done
