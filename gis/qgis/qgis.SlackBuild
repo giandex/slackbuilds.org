@@ -118,20 +118,18 @@ fi
 if [ -x /usr/bin/python3.9 ]; then
   # This to prevent build failure
   patch -p1 < $CWD/qgis3d.pyi.patch
-  # This to prevent cmake failures
-  CMAKE="/opt/cmake-opt/bin/"
-  ccache --set-config sloppines=pch_defines,time_macros
-else
-  # in current no problems
-  CMAKE=""
 fi
 
+if [ $(cmake --version |head -1 |cut -f3 -d' ') == "3.21.4" ]; then
+    echo "export PATH for cmake-opt"
+    export PATH="/opt/cmake-opt/bin/:$PATH"
+fi
 
 sed -i '43 i IF (NOT PROJ_INCLUDE_DIR)\nFIND_PATH(PROJ_INCLUDE_DIR proj.h\n"$ENV{INCLUDE}"\n"$ENV{LIB_DIR}/include"\n)\nENDIF (NOT PROJ_INCLUDE_DIR)\n' cmake/FindProj.cmake
 
 mkdir -p build
 cd build
-  ${CMAKE}cmake .. \
+  cmake .. \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -pthread" \
     -DCMAKE_BUILD_TYPE="Release" \
