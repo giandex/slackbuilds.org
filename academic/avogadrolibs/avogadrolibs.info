@@ -13,6 +13,6 @@ MD5SUM="dc3b6f832aa7e06b420b96467b5980d9 \
         4dd9a11d0e07503cf468ea97c5e94359"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="make-opt molequeue mmtf-cpp libmsym spglib"
+REQUIRES="cmake-opt molequeue mmtf-cpp libmsym spglib"
 MAINTAINER="Giancarlo Dessi"
 EMAIL="slack@giand.it"
