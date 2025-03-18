@@ -152,7 +152,7 @@ cd build
     $WITHGRASS \
     $QTWEBKIT
 
-  make -j 10
+  make
   make install DESTDIR=$PKG
 cd -
 
