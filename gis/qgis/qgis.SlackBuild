@@ -125,8 +125,11 @@ if [ $(cmake --version |head -1 |cut -f3 -d' ') == "3.21.4" ]; then
     export PATH="/opt/cmake-opt/bin/:$PATH"
 fi
 
+if [ $(ccache --version |head -1 |cut -f3 -d' ') == "4.5.1" ]; then
+    ccache --set-config sloppiness=pch_defines,time_macros
+fi
+
 sed -i '43 i IF (NOT PROJ_INCLUDE_DIR)\nFIND_PATH(PROJ_INCLUDE_DIR proj.h\n"$ENV{INCLUDE}"\n"$ENV{LIB_DIR}/include"\n)\nENDIF (NOT PROJ_INCLUDE_DIR)\n' cmake/FindProj.cmake
-sed -i 's:opencl.hpp CL/cl2.hpp:opencl.hpp:g' cmake/FindOpenCLhpp.cmake
 
 mkdir -p build
 cd build
