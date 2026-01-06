@@ -2,7 +2,7 @@
 
 # Slackware build script for lammps
 
-# Copyright 2023-2024 Giancarlo Dessi, Cagliari, IT
+# Copyright 2023-2026 Giancarlo Dessi, Cagliari, IT
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,13 +25,13 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=lammps
-VERSION=${VERSION:-2023.08.02_update3}
+VERSION=${VERSION:-2025.07.22_update2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 SRCNAM=lammps-stable
-SRCVERSION=${SRCVERSION:-2Aug2023_update3}
-PACEVERSION=v.2023.10.04
+SRCVERSION=${SRCVERSION:-22Jul2025_update2}
+PACEVERSION=v.2023.11.25.fix2
 MDIVERSION=1.4.26
 N2P2VERSION=2.2.0
 OCLLVERSION=2022.01.04
@@ -343,6 +343,11 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
   
+sed -i cmake/CMakeLists.txt -e "s:SET CMP0109 OLD:SET CMP0109 NEW:g"  
+sed -i cmake/CMakeLists.txt -e "s:SET CMP0135 OLD:SET CMP0135 NEW:g"  
+sed -i cmake/Modules/Packages/PLUMED.cmake -e "s:SET CMP0135 OLD:SET CMP0135 NEW:g"  
+sed -i cmake/Modules/Packages/ML-PACE.cmake -e "s:SET CMP0135 OLD:SET CMP0135 NEW:g"  
+
 # The Source has not a CMakeLists.txt file in the root directory we 
 # need to change in the cmake directory
 cd cmake
