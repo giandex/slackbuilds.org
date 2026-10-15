@@ -69,7 +69,7 @@ SLKCFLAGS+=" -DNDEBUG"
 
 set -e
 
-if [ $(cmake --version |head -1 |cut -f3 -d' ') == "3.21.4" ]; then
+if [ $(/usr/bin/cmake --version |head -1 |cut -f3 -d' ') == "3.21.4" ]; then
     echo "export PATH for cmake-opt"
     export PATH="/opt/cmake-opt/bin/:$PATH"
 else 
@@ -127,7 +127,7 @@ sed -i '43 i IF (NOT PROJ_INCLUDE_DIR)\nFIND_PATH(PROJ_INCLUDE_DIR proj.h\n"$ENV
 
 mkdir -p build
 cd build
-  cmake .. \
+  /opt/cmake-opt/bin/cmake .. \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -pthread" \
     -DCMAKE_BUILD_TYPE="Release" \
@@ -149,7 +149,7 @@ cd build
     $WITHGRASS \
     ..
 
-  make VERBOSE=1 -j 4
+  make VERBOSE=1
   make install/strip DESTDIR=$PKG
 cd -
 
