@@ -79,6 +79,11 @@ find . ! -type l    -a \( \
   \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
   \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \) \)
 
+# Adapt for fmt-12.2.1 (therion-6.4.0)
+for cxx in $(find src/ -name \*.cxx |xargs grep core.h|cut -d':' -f1) ; do
+   sed -i -e '/core.h>/a#include <fmt/format.h>' $cxx
+done
+
 if [ $(/usr/bin/cmake --version |head -1 |cut -f3 -d' ') == "3.21.4" ]; then
     echo "export PATH for cmake-opt"
     export PATH="/opt/cmake-opt/bin/:$PATH"
