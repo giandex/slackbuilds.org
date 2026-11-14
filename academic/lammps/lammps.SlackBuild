@@ -32,7 +32,6 @@ PKGTYPE=${PKGTYPE:-tgz}
 SRCNAM=lammps-stable
 SRCVERSION=${SRCVERSION:-30Sep2026_update1}
 PACEVERSION=v.2025.12.4.p1
-N2P2VERSION=2.2.0
 OCLLVERSION=2022.01.04
 
 if [ -z "$ARCH" ]; then
@@ -250,12 +249,13 @@ else
  echo "Extra source lammps-user-pace not downloaded"
  echo "     > Module ML-PACE will be disabled"
 fi
-# N2P2 must be downloaded in $CWD
-N2P2TARBALL=$CWD/n2p2-$N2P2VERSION.tar.gz
-if [ -f $N2P2TARBALL ]; then
- mlhdnnp="" ; [ "${MLHDNNP:-yes}" = "yes" ] && mlhdnnp="-DPKG_ML-HDNNP=yes "
+# N2P2 must be must be installed in the system
+if [ -f /usr/bin/nnp-atomenv ]; then
+ mlhdnnp="" ; [ "${MLHDNNP:-yes}" = "yes" ] && \
+    mlhdnnp="-DPKG_ML-HDNNP=yes -DN2P2_DIR=/usr -DN2P2_INCLUDE_DIR=/usr/include/n2p2 \
+             -DN2P2_CMAKE_EXTRA=/usr/share/lib/hdnnp/n2p2/lammps-extra.cmake -DDOWNLOAD_N2P2=OFF "
 else
- echo "Extra source n2p2 not downloaded"
+ echo "Package n2p2 not installed"
  echo "     > Module ML-HNDNNP will be disabled"
 fi
 # C_10_10.mesocnt extrafile data must be downloaded in $CWD
@@ -350,11 +350,6 @@ if [ "$opencl_loader" = "yes" ]; then
    fi     
 fi
 
-if [ "$mlhdnnp" != "" ]; then
-   mkdir -p cmake/build/n2p2_build-prefix/src/
-   cp -a $CWD/n2p2-$N2P2VERSION.tar.gz cmake/build/n2p2_build-prefix/src/v$N2P2VERSION.tar.gz
-fi
-
 if [ "$mlpace" != "" ]; then
    cp -a $CWD/lammps-user-pace-$PACEVERSION.tar.gz cmake/build/libpace.tar.gz
 fi
@@ -385,9 +380,11 @@ echo -e "\nFLAGS FOR MODULES ENABLED:\n "$modules"\n"
 find . ! -type l    -a \( \
   \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
   \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \) \)
-  
-sed -i cmake/CMakeLists.txt -e "s:SET CMP0109 OLD:SET CMP0109 NEW:g"  
 
+sed -i cmake/CMakeLists.txt -e "s:SET CMP0109 OLD:SET CMP0109 NEW:g"  
+sed -i cmake/CMakeLists.txt -e "s:MPI QUIET COMPONENTS CXX:MPI COMPONENTS CXX:g"
+
+echo $LIBDIRSUFFIX
 # The Source has not a CMakeLists.txt file in the root directory we 
 # need to change in the cmake directory
 cd cmake
@@ -396,8 +393,7 @@ cd build
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_LIBRARY_PATH=/usr/lib$LIBDIRSUFFIX \
-    -DCMAKE_INSTALL_LIBDIR=lib$LIBDIRSUFFIX \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib$LIBDIRSUFFIX \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_SHARED_LIBS=ON \
     $cmake_policy \

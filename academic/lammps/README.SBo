@@ -223,7 +223,7 @@ support to MPI (openmpi4 or openmpi or mpich). The script allows the
 enabling of LATBOLTZ if one of these dependencies are found in the
 system.
 
-The SCAFACOS module is enabled by default in -current. At the moment
+The SCAFACOS module is disabled by default in -current. At the moment
 the package scafacos available in Slackbuilds.org cannot be built in 
 -current due an unsolved issue after more or less recent changes in the
 official repository of Slackware. It is possible that scafacos is found
@@ -231,6 +231,9 @@ in -current installed before these changes, but the build of LAMMPS
 with this module enabled in current fails at the end (probably after
 the update of fftw). To prevent this failure, SCAFACOS will be disabled
 by the script if the -current environment is detected.
+
+The ML-HDNNP module cannot be enabled in -current because its
+dependency n2p2 cannot be build and installed in this environment.
 
 By default, LAMMPS will be built with Python anyway, even if modules
 that require it will not be enabled. If you want disable the support 

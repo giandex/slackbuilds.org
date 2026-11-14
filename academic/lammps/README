@@ -34,6 +34,7 @@ following:
                  system Lapack
 - hdf5:          required to enable the module H5MD
 - MDI-Library:   required for MDI
+- n2p2:          required for ML-HDNNP
 - netcdf:        required for NETCDF
 . PLUMED:        required for PLUMED
 - scafacos:      required for SCAFACOS
@@ -54,7 +55,7 @@ not found. The extrafiles and related modules are the following:
                     Warnings)
 
 Warnings: 
-1. Except to GPU, all packages are enabled by default if no
+1. Except to GPU, all packages are enabled by default if no 
    dependencies are required or they dependencies are found in the
    system or are included in the extrafiles listed in LAMMPS.info and
    downloaded). 
@@ -67,13 +68,12 @@ Warnings:
    on your hardware/software configuration (see notes in README.SBo). 
 2. The Eigen3 package available in Slackware -current is not supported:
    the build of LAMMPS requires Eigen3 version 3.4.0 (available in
-   Stable). If not found in the system, the build will use a bundle
+   Stable). If not found in the system, the build will use a bundle 
    Eigen3 as third part module. Users of -current have to download it
    as extrasource (listed in lammps.info).
    Obviously this extra source is not needed in Stable.
-3. The SCAFACOS package in --current is disabled. See notes in
-   README.SBo
-   for details.   
+3. Some packages cannot be enabled in Slackware 32-bit (KOKKOS) or in
+   Slackware -current (SCAFACOS and ML-HDNNP). See notes in README.SBo.
 
 See README.SBo for a full list of available packages and their 
 dependencies. 
