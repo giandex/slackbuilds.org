@@ -35,3 +35,7 @@ the README.SBo file.
 The VR rendering is still in alpha mode: it is uncomplete and may 
 cause issues depending on the configuration.
 
+4. Recommended action after installation: set capabilities on java with
+   the following command (as root)
+
+ setcap cap_ipc_lock,cap_sys_nice=ep /usr/lib64/zulu-openjdk17/bin/java
