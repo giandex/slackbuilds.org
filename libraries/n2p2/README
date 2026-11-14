@@ -4,7 +4,7 @@ Behler-Parrinello method for computational physics and chemistry.
 
 It allows to use existing neural network potential parameterizations to
 predict energies and forces in conjunction with the MD software
-LAMMPS).
+LAMMPS.
 
 n2p2 is an optional dependency of lammps.
 
