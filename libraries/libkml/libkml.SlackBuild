@@ -79,7 +79,7 @@ sed -i -e "s|libdir=\${exec_prefix}/lib|libdir=\${exec_prefix}/lib$LIBDIRSUFFIX|
 patch -p0 < $CWD/patches/p1.patch
 
 # Detect if environment is -current
-if [ $(cmake --version |head -1 |cut -f3 -d' ') != "3.21.4" ]; then
+if [ $(/usr/bincmake --version |head -1 |cut -f3 -d' ') != "3.21.4" ]; then
   # Fix in -current against recent updates of boost
   # thanks to Joel Kiptoo 
   # https://github.com/libkml/libkml/pull/284/changes/a07d0a4981bbb612cafcbced1204fc2815173ab9#top
