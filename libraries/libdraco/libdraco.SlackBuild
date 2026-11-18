@@ -86,7 +86,9 @@ cd build
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=/usr/lib$LIBDIRSUFFIX \
     -DBUILD_SHARED_LIBS=ON \
+    -DDRACO_INSTALL=ON \
     -DDRACO_TRANSCODER_SUPPORTED=ON \
+    -DDRACO_PMC_SUPPORTED=OFF \
     -DDRACO_EIGEN_PATH=/usr/include/eigen3 \
     -DDRACO_FILESYSTEM_PATH=/usr/include \
     -DCMAKE_BUILD_TYPE=Release ..
@@ -95,7 +97,6 @@ cd build
 cd ..
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
-rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.a
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
